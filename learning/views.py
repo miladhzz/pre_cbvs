@@ -11,6 +11,7 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView
 )
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -82,9 +83,13 @@ class AuthorList(ListView):
     model = Author
 
 
-class AuthorCreate(CreateView):
+class AuthorCreate(LoginRequiredMixin, CreateView):
     model = Author
     fields = ['name']
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class AuthorUpdate(UpdateView):
