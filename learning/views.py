@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView
 from .models import Publisher, Book, Author
 from django.shortcuts import get_object_or_404
@@ -94,5 +94,5 @@ class AuthorUpdate(UpdateView):
 
 class AuthorDelete(DeleteView):
     model = Author
-    success_url = reverse_lazy('author-list')
+    success_url = reverse_lazy('author_list')
 
