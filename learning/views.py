@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Publisher, Book, Author
 from django.shortcuts import get_object_or_404
@@ -12,6 +13,8 @@ from django.views.generic.edit import (
     DeleteView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.detail import SingleObjectMixin
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 
 
 
@@ -100,4 +103,19 @@ class AuthorUpdate(UpdateView):
 class AuthorDelete(DeleteView):
     model = Author
     success_url = reverse_lazy('author_list')
+
+
+class RecordInterest(SingleObjectMixin, View):
+    """Records the current user's interest in an author."""
+    model = Author
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
+        # Look up the author we're interested in.
+        self.object = self.get_object()
+        # Actually record interest somehow here!
+
+        return HttpResponseRedirect(reverse('author_detail', kwargs={'pk': self.object.pk}))
 

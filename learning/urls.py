@@ -7,7 +7,8 @@ from .views import (
     AuthorList,
     AuthorCreate, 
     AuthorDelete, 
-    AuthorUpdate
+    AuthorUpdate,
+    RecordInterest
 )
 
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
     path('author/add/', AuthorCreate.as_view(), name='author_add'),
     path('author/<int:pk>/', AuthorUpdate.as_view(), name='author_update'),
     path('author/<int:pk>/delete/', AuthorDelete.as_view(), name='author_delete'),
+    path('author/<int:pk>/interest/', RecordInterest.as_view(), name='author_interest'),
 ]
