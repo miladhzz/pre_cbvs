@@ -8,13 +8,15 @@ from .views import (
     AuthorCreate, 
     AuthorDelete, 
     AuthorUpdate,
-    RecordInterest
+    RecordInterest,
+    PublisherDetail
 )
 
 urlpatterns = [
     path('', FirstGenericView.as_view()),
     path('acme/', AcmeBookList.as_view()),
-    path('books/<publisher>/', PublisherBookList.as_view()),
+    # path('books/<publisher>/', PublisherBookList.as_view()),
+    path('books/<int:pk>/', PublisherDetail.as_view()),
     path('authors/', AuthorList.as_view(), name='author_list'),
     path('authors/<int:pk>/', AuthorDetailView.as_view(), name='author_detail'),
     path('author/add/', AuthorCreate.as_view(), name='author_add'),
